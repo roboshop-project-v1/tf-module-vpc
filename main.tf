@@ -6,7 +6,7 @@ resource "aws_vpc" "main" {
 
 module "subnets_mod" {
     source = "./local"
-    for_each = var.subnets.value
+    for_each = var.subnets
     vpc_id = aws_vpc.main.id
     subnets_list = each.value
  
