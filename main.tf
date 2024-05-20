@@ -13,3 +13,8 @@ output "vpc_details" {
     value = aws_vpc.main
   
 }
+
+output "print_Hello" {
+    value = "hello"
+  
+}
