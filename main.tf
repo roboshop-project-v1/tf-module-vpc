@@ -21,17 +21,18 @@ resource "aws_internet_gateway" "igw" {
 }
 
 
-output "subetus_info" {
-  value = module.subnets_mod
+# output "subetus_info" {
+#   value = module.subnets_mod
   
-}
-
-# resource "aws_route" "r" {
-#   for_each = module.subnets_mod["public"]
-#   route_table_id            = aws_route_table.testing.id
-#   destination_cidr_block    = "0.0.0.0/0"
-
 # }
+
+resource "aws_route" "r" {
+  for_each = module.subnets_mod["public"]["name"]
+  route_table_id            = each.value["id"]
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.igw
+
+}
 
 
 
