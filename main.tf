@@ -12,6 +12,15 @@ module "subnets_mod" {
  
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "main"
+  }
+}
+
+
 
 output "name1" {
     value = module.subnets_mod
