@@ -47,12 +47,18 @@ resource "aws_nat_gateway" "ngw" {
   subnet_id     = each.value["id"]
 }
 
-resource "aws_route" "ngw" {
-  count = length(local.private_rt_ids)
-  route_table_id            = element(local.private_rt_ids,count.index)
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id = element(aws_nat_gateway.ngw.*.id,count.index)
+# resource "aws_route" "ngw" {
+#   count = length(local.private_rt_ids)
+#   route_table_id            = element(local.private_rt_ids,count.index)
+#   destination_cidr_block    = "0.0.0.0/0"
+#   gateway_id = element(aws_nat_gateway.ngw.*.id,count.index)
+# }
+
+output "nat_gateway_info" {
+  value = aws_nat_gateway.ngw
+  
 }
+
 
 # output "name1" {
 #     value = module.subnets_mod
