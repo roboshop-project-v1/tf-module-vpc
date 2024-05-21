@@ -21,6 +21,19 @@ resource "aws_internet_gateway" "igw" {
 }
 
 
+output "subetus_info" {
+  value = module.subnets_mod
+  
+}
+
+# resource "aws_route" "r" {
+#   for_each = module.subnets_mod["public"]
+#   route_table_id            = aws_route_table.testing.id
+#   destination_cidr_block    = "0.0.0.0/0"
+
+# }
+
+
 
 output "name1" {
     value = module.subnets_mod
