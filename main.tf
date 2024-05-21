@@ -54,7 +54,7 @@ resource "aws_nat_gateway" "ngw" {
 #   gateway_id = element(aws_nat_gateway.ngw.*.id,count.index)
 # }
 
-output "nat_gateway_info" {
+output "nat_gateway_info1" {
   value = element(aws_nat_gateway.ngw.*,1)
   
 }
