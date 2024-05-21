@@ -97,7 +97,16 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 
+resource "aws_instance" "web" {
+  ami           = "ami-0f3c7d07486cad139"
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [aws_security_group.allow_tls.id]
+  subnet_id = local.app_subnet_ids[0]
 
+  tags = {
+    Name = "HelloWorld"
+  }
+}
 
 
 # output "nat_gateway_info1" {
