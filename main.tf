@@ -36,28 +36,30 @@ resource "aws_route" "igw" {
 
 
 resource "aws_eip" "ngw" {
-  for_each = lookup(lookup(module.subnets_mod,"public",null),"name",null)
+  count = length(local.public_subnet_ids)
   domain   = "vpc"
 }
 
 resource "aws_nat_gateway" "ngw" {
-  for_each = lookup(lookup(module.subnets_mod,"public",null),"name",null)
+  count = length(local.public_subnet_ids)
   
-  allocation_id = lookup(lookup(aws_eip.ngw,each.key,null),"id",null)
-  subnet_id     = each.value["id"]
+  allocation_id = element(aws_eip.ngw.*.id,count.index)
+  subnet_id     = element(local.public_subnet_ids,count.index)
 }
 
-# resource "aws_route" "ngw" {
-#   count = length(local.private_rt_ids)
-#   route_table_id            = element(local.private_rt_ids,count.index)
-#   destination_cidr_block    = "0.0.0.0/0"
-#   gateway_id = element(aws_nat_gateway.ngw.*.id,count.index)
+resource "aws_route" "ngw" {
+  count = length(local.private_rt_ids)
+  route_table_id            = element(local.private_rt_ids,count.index)
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = element(aws_nat_gateway.ngw.*.id,count.index)
+}
+
+
+
+# output "nat_gateway_info1" {
+#   value = element(element(aws_nat_gateway.ngw,count.index),
+  
 # }
-
-output "nat_gateway_info1" {
-  value = element(aws_nat_gateway.ngw.*,1)
-  
-}
 
 
 # output "name1" {
