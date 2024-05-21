@@ -55,7 +55,7 @@ resource "aws_nat_gateway" "ngw" {
 # }
 
 output "nat_gateway_info" {
-  value = aws_nat_gateway.ngw
+  value = element(aws_nat_gateway.ngw.*,1)
   
 }
 
