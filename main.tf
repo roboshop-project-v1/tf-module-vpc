@@ -27,7 +27,7 @@ resource "aws_internet_gateway" "igw" {
 # }
 
 resource "aws_route" "r" {
-  for_each = module.subnets_mod["public"]["name"]
+  for_each = module.subnets_mod["public"]["route_table_info"]
   route_table_id            = each.value["id"]
   destination_cidr_block    = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw
