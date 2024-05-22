@@ -4,6 +4,7 @@ resource "aws_subnet" "main" {
   vpc_id     = var.vpc_id
   cidr_block = each.value["cidr"]
   availability_zone = each.value["az"]
+  tags = var.tags
 }
 
 
@@ -11,9 +12,7 @@ resource "aws_route_table" "main" {
   for_each = var.subnets_list
   vpc_id = var.vpc_id
 
-  tags = {
-    name = each.key
-  }
+  tags = var.tags
 
 }
 

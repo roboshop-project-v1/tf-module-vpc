@@ -12,6 +12,8 @@ locals {
   db_rt_ids = [for k,v in lookup(lookup(module.subnets_mod,"db",null),"route_table_info",null): v.id]
   private_rt_ids =  concat(local.app_rt_ids,local.db_rt_ids)
   all_rt_ids = concat(local.private_rt_ids,local.public_rt_ids)
+
+  tags = merge(var.tags,{tf-module-name = "vpc"})
   
 
 }
