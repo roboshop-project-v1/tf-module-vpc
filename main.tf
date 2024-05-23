@@ -125,10 +125,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 #     value = module.subnets_mod
   
 # }
-# output "vpc_details" {
-#     value = aws_vpc.main
-  
-# }
+
 
 # output "print_Hello" {
 #     value = "hello"
